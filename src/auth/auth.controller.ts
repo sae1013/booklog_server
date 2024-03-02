@@ -9,14 +9,14 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  // Guard 가 Google auth를 처리.
+  // Guard handles google Auth
   async googleAuth(@Req() req) {}
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   googleAuthRedirect(@Req() req, @Res() response) {
-    response.cookie('jwt', req.jwt, { path: '/' });
-    return response.redirect('http://localhost:3000/user/auth/callback');
+    const user = req.user;
+    return response.status(200).json(user);
   }
 
   @Get('logout')
