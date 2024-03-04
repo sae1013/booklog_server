@@ -1,16 +1,15 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
-import { ClientURL, PROVIDER_OAUTH_CALLBACK_URL } from './url';
+import { baseURL, PROVIDER_OAUTH_CALLBACK_URL } from './url';
 import { sign } from 'jsonwebtoken';
-
+import { AuthService } from './auth.service';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor() {
-    const callbackURL = `${ClientURL}${PROVIDER_OAUTH_CALLBACK_URL.GOOGLE}`;
+  constructor(private authService: AuthService) {
     super({
       clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
       clientSecret: process.env.GOOGLE_OAUTH_SECRET_KEY,
-      callbackURL: callbackURL,
+      callbackURL: `${baseURL}${PROVIDER_OAUTH_CALLBACK_URL.GOOGLE}`,
       scope: ['email', 'profile'],
     });
   }
@@ -39,13 +38,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       accessToken,
       refreshToken,
     };
-    const payload = {
-      email: user.email,
-      name: user.firstName + user.lastName,
-      accessToken,
-      refreshToken,
-    };
-    const jwt = sign(payload, process.env.JWT_KEY, { expiresIn: '6h' });
+
+    // const jwt = sign(payload, process.env.JWT_KEY, { expiresIn: '6h' });
     done(null, user);
   }
 }

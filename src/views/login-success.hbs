@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Authentication Success</title>
+  </head>
+  <body>
+    <div>hello</div>
+    <script>
+      window.onload = () => {
+        const targetOrigin = "http://localhost:3000"; 
+        window.opener.postMessage('{{{authData}}}',targetOrigin); 
+        window.close();
+      }
+    </script>
+  </body>
+</html>

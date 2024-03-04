@@ -7,7 +7,7 @@ import { AuthController } from './auth.controller';
 
 @Module({
   // imports: [PassportModule.register({ defaultStrategy: 'google' })],
-  imports: [PassportModule],
+  imports: [GoogleStrategy],
   providers: [AuthService, GoogleStrategy],
   controllers: [AuthController],
 })
