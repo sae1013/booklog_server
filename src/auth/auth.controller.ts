@@ -35,7 +35,8 @@ export class AuthController {
       token: jwt,
       user: payload,
     });
-    response.cookie('user', 'asdfwef', { secure: true });
+    response.cookie('jwt', jwt, { secure: true });
+    response.cookie('refreshToken', payload.refreshToken, { secure: true });
     return { authData };
   }
 

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 
+const todo = ['hello world'];
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -10,9 +11,15 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('writeHello/test')
+  @Get('data')
+  getData() {
+    return todo;
+  }
+
+  @Post('data')
   writeHello(@Req() req, res): string {
-    console.log(req.body.name);
+    const data = req.body;
+    todo.push(data);
     // console.log(body);
     return 'Success';
   }
