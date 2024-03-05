@@ -3,13 +3,20 @@
     <title>Authentication Success</title>
   </head>
   <body>
-    <div>hello</div>
     <script>
-      window.onload = () => {
-        const targetOrigin = "http://localhost:3000"; 
-        window.opener.postMessage('{{{authData}}}',targetOrigin); 
-        window.close();
+      window.onload = () => { 
+        const user = '{{{user}}}';
+        const status = '{{{status}}}'
+        const errorMessage = '{{{errorMessage}}}';
+
+        const targetOrigin = "http://localhost:3000";
+        const response = JSON.stringify({
+          user,status,errorMessage
+        })
+        window.opener.postMessage(response,targetOrigin);
+        window.close(); 
       }
+
     </script>
   </body>
 </html>
