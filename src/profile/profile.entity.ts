@@ -30,6 +30,9 @@ export class Profile {
   @Column({ nullable: true })
   phoneNumber: string;
 
+  @Column({ nullable: false })
+  userId: number;
+
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
@@ -37,7 +40,7 @@ export class Profile {
   })
   updatedAt: Date;
 
-  @OneToOne(() => User, { onDelete: 'CASCADE' }) // User 엔터티와의 1:1 관계를 설정
-  @JoinColumn({ name: 'userId' }) // 이 데코레이터를 사용하여 FK를 명시적으로 지정
-  user: User; // 칼럼명은 userId임.
+  @OneToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }

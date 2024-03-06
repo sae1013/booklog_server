@@ -4,9 +4,19 @@ import { User } from './user.entity';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
   @Get('')
   async getAllUser(): Promise<User[]> {
     const user = await this.userService.findAll();
     return user;
   }
+
+  @Get('test')
+  async handleTest() {
+    const result = await this.userService.signUpTest();
+    return result;
+  }
+  // @Get('Test'){
+  //   this.userService.signUpTest()
+  // }
 }
