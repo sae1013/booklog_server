@@ -7,6 +7,8 @@ import { PostModule } from './post/post.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
+import { BookModule } from './book/book.module';
+import { ProfileModule } from './profile/profile.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -19,10 +21,13 @@ import { User } from './user/user.entity';
       database: process.env.DB_DATABASE_NAME,
       entities: [User],
       synchronize: true, // Note: 이 옵션은 개발 환경에서만 사용하세요. 프로덕션에서는 false로 설정해야 합니다.
+      logging: true,
     }),
     AuthModule,
     PostModule,
     UserModule,
+    BookModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

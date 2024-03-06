@@ -47,7 +47,7 @@ export class AuthController {
         });
       }
       const payload = {
-        user_id: user.user_id,
+        user_id: user.email,
         access_token: authenticatedUser.accessToken,
         channel: 'google',
       };
