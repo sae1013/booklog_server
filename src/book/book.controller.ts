@@ -11,14 +11,10 @@ export class BookController {
     return res.send(result);
   }
 
-  // 사용자가 책을 선택했을 때.
-  //   @Post('select')
-  //   async selectBookByUserHandler(@Req() req, @Res() res, @Body() body) {
-  //     const book = this.bookService.findBookBySearchOption();
-  //     // save to DB
-  //   }
-
-  // 검색 API 책을 DB에 저장할 때.
-  @Post('register')
-  async registerBookToDBHandler(@Req() req, @Res() res, @Body() body) {}
+  //   사용자가 책을 선택했을 때. DB에 있는지 조회하고 없으면 저장한다
+  @Post('select')
+  async selectBookByUserHandler(@Req() req, @Res() res, @Body() body) {
+    const savedBook = this.bookService.findBookAndSave(body.book);
+    return savedBook;
+  }
 }
