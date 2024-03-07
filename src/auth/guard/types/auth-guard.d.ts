@@ -1,4 +1,6 @@
 export interface jwtPayload {
-  user_id: string;
-  name: string;
+  id: string;
+  accessToken: string;
+  email: string;
+  status: string;
 }

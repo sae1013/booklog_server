@@ -16,9 +16,6 @@ export class Profile {
   profileUrl: string;
 
   @Column({ nullable: false })
-  name: string;
-
-  @Column({ nullable: false })
   nickName: string;
 
   @Column()

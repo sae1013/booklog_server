@@ -16,10 +16,17 @@ export class JwtAuthGuard implements CanActivate {
       }
       const decoded = jwt.verify(token, process.env.JWT_KEY) as jwtPayload;
 
-      // 만약 필요하다면, DB 부하를 고려해서 table에서 user정보 조회하고 request에 심어주세요.
+      /*
+        NOTE: 만약 profile 정보가 부득이하게 필요하면, 쿼리조회를 고려해서 삽입해주세요.
+        If not, 구현체에서 직접 쿼리하는것이 유리합니다.
+      */
+      const { id, email, status, accessToken } = decoded;
+
       request.user = {
-        user_id: decoded.user_id,
-        name: decoded.name,
+        id,
+        email,
+        status,
+        accessToken,
       };
       return true;
     } catch (error) {

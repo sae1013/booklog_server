@@ -1,7 +1,6 @@
-export const publicUserInfoKeys = ['email', 'status'];
+export const publicUserInfoKeys = ['email', 'status', 'name'];
 export const publicProfileInfoKeys = [
   'profileUrl',
-  'name',
   'nickName',
   'gender',
   'address',

@@ -27,11 +27,11 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   @Render('login-success')
   async googleAuthRedirect(@Req() req, @Res() response) {
-    const authenticatedUser = req.user;
-    console.log('호출');
+    const authenticatedInfo = req.user;
+
     try {
       // eslint-disable-next-line prefer-const
-      let user = await this.userService.findOne(authenticatedUser.email);
+      let user = await this.userService.findOne(authenticatedInfo.email);
       if (user.channel != 'google') {
         return {
           user: null,
@@ -40,24 +40,28 @@ export class AuthController {
         };
       }
       if (!user) {
-        user = await this.userService.signUp({
-          user_id: authenticatedUser.email,
-          name: authenticatedUser.lastName + '' + authenticatedUser.firstName,
+        user = await this.userService.signUpAndInitializeProfile({
+          email: authenticatedInfo.email,
+          name: authenticatedInfo.lastName + '' + authenticatedInfo.firstName,
           channel: 'google',
+          status: 'active',
         });
       }
-      const payload = {
-        user_id: user.email,
-        access_token: authenticatedUser.accessToken,
+
+      const jwtPayload = {
+        id: user.id,
+        accessToken: authenticatedInfo.accessToken,
+        email: authenticatedInfo.email,
+        status: 'active',
         channel: 'google',
       };
 
-      const jwt = sign(payload, process.env.JWT_KEY, { expiresIn: '24h' });
+      const jwt = sign(jwtPayload, process.env.JWT_KEY, { expiresIn: '24h' });
       response.cookie('jwt', jwt, { secure: true });
-      response.cookie('refreshToken', authenticatedUser.refreshToken, {
+      response.cookie('refreshToken', authenticatedInfo.refreshToken, {
         secure: true,
       });
-      return { user, status: 200 };
+      return { successMessage: '로그인에 성공하였습니다', status: 200 };
     } catch (err) {
       //TODO Nest js 에서 err 객체와 상태값 체크해야 합니다.
       return { user: null, status: err.status, errorMessage: err.message };

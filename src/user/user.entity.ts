@@ -17,6 +17,9 @@ export class User {
   @Column({ nullable: false }) // 이메일 주소
   email: string;
 
+  @Column({ nullable: false }) // 이메일에 설정한 본명
+  name: string;
+
   @Column({ nullable: true }) // 처음 가입한 경로.
   channel: string;
 
