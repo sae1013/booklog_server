@@ -39,7 +39,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       refreshToken,
     };
 
-    // const jwt = sign(payload, process.env.JWT_KEY, { expiresIn: '6h' });
     done(null, user);
   }
 }
