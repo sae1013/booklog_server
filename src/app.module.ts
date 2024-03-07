@@ -8,7 +8,10 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
 import { Profile } from './profile/profile.entity';
-// import { BookModule } from './book/book.module';
+import { BookModule } from './book/book.module';
+import { UserBook } from './userbook/userbook.entity';
+import { Book } from './book/book.entity';
+import { Post } from '@nestjs/common';
 import { ProfileModule } from './profile/profile.module';
 @Module({
   imports: [
@@ -20,14 +23,14 @@ import { ProfileModule } from './profile/profile.module';
       username: process.env.DB_USER_NAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE_NAME,
-      entities: [User, Profile],
+      entities: [User, Profile, Book, UserBook],
       synchronize: true, // Note: 이 옵션은 개발 환경에서만 사용하세요. 프로덕션에서는 false로 설정해야 합니다.
       logging: true,
     }),
     AuthModule,
     PostModule,
     UserModule,
-    // BookModule,
+    BookModule,
     ProfileModule,
   ],
   controllers: [AppController],
