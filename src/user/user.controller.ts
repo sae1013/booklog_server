@@ -5,17 +5,13 @@ import { User } from './user.entity';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('')
+  @Get('all')
+  // 관리자만 수행할 수 있도록.
   async getAllUser(): Promise<User[]> {
     const user = await this.userService.findAll();
     return user;
   }
 
-  @Get('test')
-  async handleTest() {
-    const result = await this.userService.signUpTest();
-    return result;
-  }
   // @Get('Test'){
   //   this.userService.signUpTest()
   // }
